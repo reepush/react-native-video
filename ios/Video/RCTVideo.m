@@ -1072,8 +1072,8 @@ static int const RCTVideoUnset = -1;
 - (void)configureAudio
 {
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    AVAudioSessionCategory category = nil;
-    AVAudioSessionCategoryOptions options = nil;
+    AVAudioSessionCategory category = session.category;
+    AVAudioSessionCategoryOptions options = session.categoryOptions;
 
     if([_ignoreSilentSwitch isEqualToString:@"ignore"]) {
       category = AVAudioSessionCategoryPlayback;
@@ -1082,18 +1082,12 @@ static int const RCTVideoUnset = -1;
     }
 
     if([_mixWithOthers isEqualToString:@"mix"]) {
-      options = AVAudioSessionCategoryOptionMixWithOthers;
+      options = AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionAllowBluetooth;
     } else if([_mixWithOthers isEqualToString:@"duck"]) {
       options = AVAudioSessionCategoryOptionDuckOthers;
     }
 
-    if (category != nil && options != nil) {
-      [session setCategory:category withOptions:options error:nil];
-    } else if (category != nil && options == nil) {
-      [session setCategory:category error:nil];
-    } else if (category == nil && options != nil) {
-      [session setCategory:session.category withOptions:options error:nil];
-    }
+    [session setCategory:category withOptions:options error:nil];
 }
 
 - (void)setRepeat:(BOOL)repeat {

@@ -1086,8 +1086,10 @@ static int const RCTVideoUnset = -1;
     } else if([_mixWithOthers isEqualToString:@"duck"]) {
       options = AVAudioSessionCategoryOptionDuckOthers;
     }
-
-    [session setCategory:category withOptions:options error:nil];
+    
+    if (category != session.category || options != session.categoryOptions) {
+        [session setCategory:category withOptions:options error:nil];
+    }
 }
 
 - (void)setRepeat:(BOOL)repeat {

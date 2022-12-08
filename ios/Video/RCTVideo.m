@@ -934,8 +934,10 @@ static int const RCTVideoUnset = -1;
     [_player pause];
     [_player setRate:0.0];
   } else {
-
-    [self configureAudio];
+      
+    if(_paused != paused) {
+      [self configureAudio];
+    }
 
     if (@available(iOS 10.0, *) && !_automaticallyWaitsToMinimizeStalling) {
       [_player playImmediatelyAtRate:_rate];
@@ -1087,9 +1089,7 @@ static int const RCTVideoUnset = -1;
       options = AVAudioSessionCategoryOptionDuckOthers;
     }
     
-    if (category != session.category || options != session.categoryOptions) {
-        [session setCategory:category withOptions:options error:nil];
-    }
+    [session setCategory:category withOptions:options error:nil];
 }
 
 - (void)setRepeat:(BOOL)repeat {

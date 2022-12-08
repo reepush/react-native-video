@@ -1082,7 +1082,7 @@ static int const RCTVideoUnset = -1;
     }
 
     if([_mixWithOthers isEqualToString:@"mix"]) {
-      options = AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionAllowBluetooth;
+      options = AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDefaultToSpeaker;
     } else if([_mixWithOthers isEqualToString:@"duck"]) {
       options = AVAudioSessionCategoryOptionDuckOthers;
     }
